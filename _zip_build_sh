@@ -1,0 +1,6 @@
+#!/bin/bash
+
+date=`date +%Y%m%d_%H`;
+zip -r "./build(${date}).zip" "./build"
+
+#zip -r "../crypto_tgbot_faka.zip" "."

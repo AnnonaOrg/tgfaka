@@ -1,0 +1,1 @@
+🎉 {{ .Invitees }} 已经接受你的邀请，你获得了 {{ .InviteRewardsBalanceNum }} {{ .BalanceCurrency }} 奖励！

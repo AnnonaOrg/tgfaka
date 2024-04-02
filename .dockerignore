@@ -1,0 +1,9 @@
+.DS_Store
+build.rar
+.env
+*.zip
+*.rar
+
+#annona
+_start_sh
+_build_docker

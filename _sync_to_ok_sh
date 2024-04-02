@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cp -rf ./cmd/* ../tgfaka_zip_ok/cmd/
+cp -rf ./build/* ../tgfaka_zip_ok/build/
+cp -rf ./internal/* ../tgfaka_zip_ok/internal/
+cp -rf ./templates/* ../tgfaka_zip_ok/templates/
+cp -rf ./Dockerfile ../tgfaka_zip_ok/

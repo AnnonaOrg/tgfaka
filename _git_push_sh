@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+
+VERSION=3.2.2
+APPNAME=tgfaka
+
+echo ${APPNAME}
+echo "package constvar" > ./internal/constvar/version.go
+echo "const(APP_NAME = \"${APPNAME}\"" >> ./internal/constvar/version.go
+echo "APP_VERSION = \"${VERSION}\")" >> ./internal/constvar/version.go
+go fmt ./internal/constvar
+
+
+rm ./cmd/cmd
+rm ./cmd/main
+git add .
+git commit -m "v${VERSION} debug"
+git push -u origin main
+
+git tag "v${VERSION}"
+git push --tags  -u origin main
+#bash _sync_to_ok_sh

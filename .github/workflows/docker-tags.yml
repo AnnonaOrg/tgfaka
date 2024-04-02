@@ -1,0 +1,47 @@
+name: docker-tags
+on:
+  workflow_dispatch: #github页面手动触发
+  push:
+    tags:
+      - "v*.*"
+env:
+  IMAGE_NAME: annona_tgfaka #这是您的镜像名
+jobs:
+  get-tags:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    outputs:
+      tags: ${{ steps.output-id.outputs.v }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: output-id
+        run: |
+          VERSION=edge
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          fi
+          echo "v=${VERSION}" >> $GITHUB_OUTPUT                 
+  push-docker-hub:
+    needs: get-tags
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build && Push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ needs.get-tags.outputs.tags }}
+  
+
+  
