@@ -21,3 +21,4 @@ git push -u origin main
 git tag "v${VERSION}"
 git push --tags  -u origin main
 #bash _sync_to_ok_sh
+
