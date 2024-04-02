@@ -34,6 +34,22 @@ templates   # telegram回复模板
 cmd         # 程序入口
 ```
 
+# 配置文件 
+# 文件目录
+
+```angular2html
+.
+├── README.md
+├── _init_env_sh   			# debian 系统 安装docker脚本
+├── _start_sh   				# 启动脚本
+├── conf
+│   ├── config.ini   		# 配置文件 必填配置
+│   ├── config.simple.ini 	# 配置模版 无需更改
+│   └── db_config.ini 		# 数据库配置文件 无需更改
+├── docker-compose.yml 		# docker配置文件 无需更改
+└── nginx_site.conf 			# nginx配置文件 无需更改
+```
+
 # 安全说明：
     1 .env路径下的文件包含敏感信息，请不要暴漏给外部（不要把该文件夹放到nginx网站目录下）
     2 请对自己的信息负责，保护好自己的tg账号，不要使用第三方客户端；登录管理页面后及时退出；如数据库中有钱包密钥，谨慎使用导出钱包功能
