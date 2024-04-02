@@ -3,17 +3,18 @@ package services
 import (
 	"errors"
 	"fmt"
-	"gopay/internal/exts/config"
-	"gopay/internal/exts/db"
-	my_log "gopay/internal/exts/log"
-	"gopay/internal/exts/tg_bot"
-	"gopay/internal/models"
-	"gopay/internal/utils"
 	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/exts/tg_bot"
+	"github.com/umfaka/tgfaka/internal/log"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/utils"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/google/uuid"
@@ -296,7 +297,7 @@ func CreateOrderByBalance(targetCurrency config.Currency, targetNetwork string, 
 	// 核查用户余额是否可足额付款
 	userBalance, _, err := CheckUserBalance(tgChatID, targetPrice)
 	if err != nil {
-		my_log.LogError(fmt.Sprintf("CheckUserBalance(%d,%v): %v", tgChatID, targetPrice, err))
+		log.Errorf("CheckUserBalance(%d,%v): %v", tgChatID, targetPrice, err)
 		return nil, fmt.Errorf("CheckUserBalance(%d,%v): %v", tgChatID, targetPrice, err)
 	}
 
@@ -319,9 +320,8 @@ func CreateOrderByBalance(targetCurrency config.Currency, targetNetwork string, 
 
 	freeWallet, err = GetFreeDecimalWallet(targetNetwork, targetCurrency, targetPrice)
 	if err != nil {
-		my_log.LogError(
-			fmt.Sprintf("GetFreeDecimalWallet(%v,%v,%v): %v", targetNetwork, targetCurrency, targetPrice, err),
-		)
+		log.Errorf("GetFreeDecimalWallet(%v,%v,%v): %v", targetNetwork, targetCurrency, targetPrice, err)
+
 		return nil, fmt.Errorf("GetFreeDecimalWallet(%v,%v,%v): %v", targetNetwork, targetCurrency, targetPrice, err)
 	}
 
@@ -625,9 +625,9 @@ func SendOrderCallBackMore(chatID int64, toDeleteMsgID int, order models.Order, 
 		newMsg.Caption = msgText
 		newMsg.ParseMode = tgbotapi.ModeHTML
 		if result, err := tg_bot.Bot.Send(newMsg); err != nil {
-			my_log.LogError(fmt.Sprintf("Bot.Send(%+v):%v", newMsg, err))
+			log.Errorf("Bot.Send(%+v):%v", newMsg, err)
 		} else {
-			my_log.LogDebug(fmt.Sprintf("result: %+v", result))
+			log.Errorf("result: %+v", result)
 		}
 	} else {
 		msgText = msgText + "\n" + "未找到商品项目:请联系客服处理"
@@ -635,9 +635,9 @@ func SendOrderCallBackMore(chatID int64, toDeleteMsgID int, order models.Order, 
 		newMsg.DisableWebPagePreview = true
 		newMsg.ParseMode = tgbotapi.ModeHTML
 		if result, err := tg_bot.Bot.Send(newMsg); err != nil {
-			my_log.LogError(fmt.Sprintf("Bot.Send(%+v):%v", newMsg, err))
+			log.Errorf("Bot.Send(%+v):%v", newMsg, err)
 		} else {
-			my_log.LogDebug(fmt.Sprintf("result: %+v", result))
+			log.Debugf("result: %+v", result)
 			retMsgID = result.MessageID
 		}
 	}
@@ -814,7 +814,7 @@ func SendOrderCallBackFileProduct(chatID int64, toDeleteMsgID int, order models.
 		item := strings.TrimPrefix(vContent, FILE_PRODUCT_ITEM_Prefix)
 		item = filepath.Join(".", fileProductDir, item)
 		productItems = append(productItems, item)
-		my_log.LogDebug(fmt.Sprintf("productItem file: %s", item))
+		log.Debugf("productItem file: %s", item)
 	}
 	var fileBody []byte
 	var err error
@@ -822,9 +822,9 @@ func SendOrderCallBackFileProduct(chatID int64, toDeleteMsgID int, order models.
 		fileBody, err = utils.ZipFilesToByte(productItems)
 		if err != nil {
 			msgText = msgText + "\n" + fmt.Sprintf("文件压缩打包出错: %v", err)
-			my_log.LogError(fmt.Sprintf("productItems(%+v):%v", productItems, err))
+			log.Errorf("productItems(%+v):%v", productItems, err)
 		} else {
-			my_log.LogDebug(fmt.Sprintf("len(%+v):%d", productItems, len(fileBody)))
+			log.Errorf("len(%+v):%d", productItems, len(fileBody))
 		}
 	}
 
@@ -835,9 +835,9 @@ func SendOrderCallBackFileProduct(chatID int64, toDeleteMsgID int, order models.
 		newMsg.Caption = msgText
 		newMsg.ParseMode = tgbotapi.ModeHTML
 		if result, err := tg_bot.Bot.Send(newMsg); err != nil {
-			my_log.LogError(fmt.Sprintf("Bot.Send(%+v):%v", newMsg, err))
+			log.Errorf("Bot.Send(%+v):%v", newMsg, err)
 		} else {
-			my_log.LogDebug(fmt.Sprintf("result: %+v", result))
+			log.Debugf("result: %+v", result)
 		}
 	} else {
 		msgText = msgText + "\n" + "请联系客服处理"
@@ -845,9 +845,9 @@ func SendOrderCallBackFileProduct(chatID int64, toDeleteMsgID int, order models.
 		newMsg.DisableWebPagePreview = true
 		newMsg.ParseMode = tgbotapi.ModeHTML
 		if result, err := tg_bot.Bot.Send(newMsg); err != nil {
-			my_log.LogError(fmt.Sprintf("Bot.Send(%+v):%v", newMsg, err))
+			log.Errorf("Bot.Send(%+v):%v", newMsg, err)
 		} else {
-			my_log.LogDebug(fmt.Sprintf("result: %+v", result))
+			log.Debugf("result: %+v", result)
 			// retMsgID = result.MessageID
 		}
 	}
@@ -866,25 +866,25 @@ func SendOrderCallBackChatInviteLinkProduct(chatID int64, toDeleteMsgID int, ord
 		if GetChatInviteLinkHistoryCount(v.ID.String()) > 0 {
 			item, err := GetChatInviteLink(v.ID.String())
 			if err != nil {
-				my_log.LogError(fmt.Sprintf("GetChatInviteLink(%s): %v", v.ID.String(), err))
+				log.Errorf("GetChatInviteLink(%s): %v", v.ID.String(), err)
 				continue
 			}
 			productItems = append(productItems, item)
-			my_log.LogDebug(fmt.Sprintf("productItem file: %s", item))
+			log.Debugf("productItem file: %s", item)
 		} else {
 			vContent := v.Content
 			itemStr := strings.TrimPrefix(vContent, CHATINVITELINK_PRODUCT_ITEM_Prefix)
 			item, err := createInvite(itemStr, 1)
 			if err != nil {
-				my_log.LogError(fmt.Sprintf("createInvite(%s): %v", vContent, err))
+				log.Errorf("createInvite(%s): %v", vContent, err)
 				continue
 			}
 			productItems = append(productItems, item)
 			chatInviteLinkHistory := models.NewChatInviteLinkHistory(v.ID, item)
 			if err := CreateChatInviteLinkHistory(chatInviteLinkHistory); err != nil {
-				my_log.LogError(fmt.Sprintf("CreateChatInviteLinkHistory(%+v): %v", chatInviteLinkHistory, err))
+				log.Errorf("CreateChatInviteLinkHistory(%+v): %v", chatInviteLinkHistory, err)
 			}
-			my_log.LogDebug(fmt.Sprintf("productItem file: %s", item))
+			log.Debugf("productItem file: %s", item)
 		}
 
 	}
@@ -901,9 +901,9 @@ func SendOrderCallBackChatInviteLinkProduct(chatID int64, toDeleteMsgID int, ord
 	newMsg.DisableWebPagePreview = true
 	newMsg.ParseMode = tgbotapi.ModeHTML
 	if result, err := tg_bot.Bot.Send(newMsg); err != nil {
-		my_log.LogError(fmt.Sprintf("Bot.Send(%+v):%v", newMsg, err))
+		log.Errorf("Bot.Send(%+v):%v", newMsg, err)
 	} else {
-		my_log.LogDebug(fmt.Sprintf("result: %+v", result))
+		log.Debugf("result: %+v", result)
 	}
 
 	// 删除原消息

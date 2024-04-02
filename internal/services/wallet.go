@@ -3,15 +3,16 @@ package services
 import (
 	"encoding/json"
 	"errors"
-	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
-	"gopay/internal/exts/config"
-	"gopay/internal/exts/db"
-	"gopay/internal/models"
-	"gopay/internal/utils/functions"
-	"gorm.io/gorm"
 	"strings"
 	"time"
+
+	"github.com/google/uuid"
+	"github.com/shopspring/decimal"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"gorm.io/gorm"
 )
 
 func GetWalletOrder() string {

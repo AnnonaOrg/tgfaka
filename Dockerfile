@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . .
 RUN apk --no-cache --update add git ca-certificates  build-base
 # RUN apk add --no-cache --update git build-base   
-RUN  CGO_ENABLED=1 go build -o main -trimpath -ldflags "-s -w -buildid=" ./cmd/
+RUN  CGO_ENABLED=1 go build -o main -trimpath -ldflags "-s -w -buildid=" ./cmd/main/
 
 
 FROM alpine:3.18 as runner
@@ -18,4 +18,6 @@ ENTRYPOINT ["./main"]
 EXPOSE 8082
 #COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=builder /app/templates /app/templates
+COPY --from=builder /app/static /app/static
+COPY --from=builder /app/conf /app/conf
 COPY --from=builder /app/main /app/main

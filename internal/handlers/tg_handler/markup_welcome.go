@@ -1,7 +1,7 @@
 package tg_handler
 
 import (
-	"gopay/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/config"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )

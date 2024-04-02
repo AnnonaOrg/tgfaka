@@ -2,7 +2,7 @@
 
 
 
-VERSION=3.2.2
+VERSION=3.3.0
 APPNAME=tgfaka
 
 echo ${APPNAME}
@@ -12,8 +12,8 @@ echo "APP_VERSION = \"${VERSION}\")" >> ./internal/constvar/version.go
 go fmt ./internal/constvar
 
 
-rm ./cmd/cmd
-rm ./cmd/main
+#rm ./cmd/cmd
+#rm ./cmd/main/main
 git add .
 git commit -m "v${VERSION} debug"
 git push -u origin main

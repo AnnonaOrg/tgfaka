@@ -4,10 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
-	"gopay/internal/models"
-	"gopay/internal/services"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/restful"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/restful"
 )
 
 func CreateProduct(c *gin.Context) {

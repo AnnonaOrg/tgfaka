@@ -4,12 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/golang/freetype"
-	"github.com/golang/freetype/truetype"
-	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
-	"github.com/skip2/go-qrcode"
 	"image"
 	"image/draw"
 	"image/png"
@@ -20,6 +14,13 @@ import (
 	"strings"
 	"time"
 	"unicode"
+
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/golang/freetype"
+	"github.com/golang/freetype/truetype"
+	"github.com/google/uuid"
+	"github.com/shopspring/decimal"
+	"github.com/skip2/go-qrcode"
 )
 
 func GenerateToken(dataMap map[string]interface{}, secretString string, expireTime time.Duration) (string, error) {
@@ -293,7 +294,7 @@ func GenerateQrCodeBytes(text string) ([]byte, error) {
 		return nil, errors.New("读取图片失败")
 	}
 	// Load a font.
-	font, err := LoadFont(GetExecutableDir() + "/.env/static/font.ttf")
+	font, err := LoadFont(GetExecutableDir() + "/static/font.ttf")
 	if err != nil {
 		return nil, errors.New("读取字体失败")
 	}

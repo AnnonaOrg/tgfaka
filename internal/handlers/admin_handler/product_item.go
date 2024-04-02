@@ -1,13 +1,14 @@
 package admin_handler
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"gopay/internal/models"
-	"gopay/internal/services"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/restful"
-	"strings"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/restful"
 )
 
 func CreateProductItems(c *gin.Context) {

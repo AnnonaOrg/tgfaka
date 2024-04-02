@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
-	"gopay/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/config"
 	"gorm.io/gorm"
 )
 

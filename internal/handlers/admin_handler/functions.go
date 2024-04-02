@@ -3,11 +3,11 @@ package admin_handler
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"gopay/internal/exts/db"
-	"gopay/internal/models"
-	"gopay/internal/services"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/restful"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/restful"
 )
 
 type PaginationRequest struct {

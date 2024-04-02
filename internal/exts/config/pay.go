@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/shopspring/decimal"
-	"gopay/internal/utils/functions"
 	"os"
 	"strings"
 	"sync"
+
+	"github.com/shopspring/decimal"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 )
 
 type Network string

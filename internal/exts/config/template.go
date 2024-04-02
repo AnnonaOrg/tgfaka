@@ -3,9 +3,10 @@ package config
 import (
 	"bytes"
 	"fmt"
-	"gopay/internal/utils/functions"
 	"text/template"
 	"time"
+
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 )
 
 var templates *template.Template

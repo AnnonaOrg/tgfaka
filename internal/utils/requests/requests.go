@@ -5,13 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"gopay/internal/exts/config"
-	my_log "gopay/internal/exts/log"
 	"io"
 	"net"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/log"
 )
 
 func ClientProxy(client *http.Client, proxy config.Proxy) error {
@@ -82,7 +83,7 @@ func sendRequest(method string, url string, dataMap *map[string]interface{}, opt
 		}
 	}
 
-	my_log.LogDebug(fmt.Sprintf("%s: %s ,Data: %d", method, url, dataMap))
+	log.Debugf("%s: %s ,Data: %d", method, url, dataMap)
 	for i := 0; i < 1; i++ {
 		resp, err = client.Do(req)
 		if err != nil {

@@ -2,10 +2,11 @@ package handle_defender
 
 import (
 	"fmt"
-	my_log "gopay/internal/exts/log"
-	"gopay/internal/exts/tg_bot"
 	"runtime"
 	"strings"
+
+	"github.com/umfaka/tgfaka/internal/exts/tg_bot"
+	"github.com/umfaka/tgfaka/internal/log"
 )
 
 func HandlePanic(r interface{}, prefixString string) {
@@ -30,12 +31,12 @@ func HandlePanic(r interface{}, prefixString string) {
 	}
 
 	msgText := fmt.Sprintf("%s, Error: %s", prefixString, msg)
-	my_log.LogError(msgText)
+	log.Error(msgText)
 	tg_bot.SendAdmin(msgText)
 }
 
 func HandleError(err error, prefixString string) {
 	msgText := fmt.Sprintf("%s, Error: %v", prefixString, err)
-	my_log.LogError(msgText)
+	log.Error(msgText)
 	tg_bot.SendAdmin(msgText)
 }

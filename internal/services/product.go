@@ -2,8 +2,9 @@ package services
 
 import (
 	"errors"
-	"gopay/internal/exts/db"
-	"gopay/internal/models"
+
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/models"
 
 	"github.com/google/uuid"
 )

@@ -1,11 +1,12 @@
 package admin_handler
 
 import (
+	"reflect"
+
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
-	"gopay/internal/exts/config"
-	"gopay/internal/utils/functions"
-	"reflect"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 )
 
 func init() {

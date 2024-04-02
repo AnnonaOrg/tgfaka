@@ -3,11 +3,11 @@ package services
 import (
 	"encoding/json"
 	"fmt"
-	my_log "gopay/internal/exts/log"
-	"gopay/internal/exts/tg_bot"
 	"strconv"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/umfaka/tgfaka/internal/exts/tg_bot"
+	"github.com/umfaka/tgfaka/internal/log"
 )
 
 // 要求机器人具有管理员权限
@@ -28,7 +28,7 @@ func createInvite(chatIDStr string, memberLimit int) (string, error) {
 	resp, err := tg_bot.Bot.Request(inviteLinkConfig)
 	if err != nil {
 		// log.Fatal(err)
-		my_log.LogError(fmt.Sprintf("Bot.Request(%+v): %v", inviteLinkConfig, err))
+		log.Errorf("Bot.Request(%+v): %v", inviteLinkConfig, err)
 		return "", fmt.Errorf("Bot.Request: %v", err)
 	}
 
@@ -37,11 +37,8 @@ func createInvite(chatIDStr string, memberLimit int) (string, error) {
 
 	err = json.Unmarshal(invite, inviteLink)
 	if err != nil {
-		my_log.LogError(fmt.Sprintf("Bot.Request(%+v): %v", invite, err))
-		// log.Printf("%+v", invite)
-		// log.Fatal(err)
+		log.Errorf("Bot.Request(%+v): %v", invite, err)
 		return "", fmt.Errorf("json.Unmarshal: %v", err)
 	}
 	return inviteLink.InviteLink, nil
-	// fmt.Println("Invite link:", inviteLink.InviteLink)
 }

@@ -2,15 +2,16 @@ package db
 
 import (
 	"fmt"
-	"gopay/internal/exts/config"
-	"gopay/internal/utils/functions"
+	"log"
+	"os"
+	"time"
+
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
-	"os"
-	"time"
 )
 
 var DB *gorm.DB
@@ -42,7 +43,7 @@ func InitDB() *gorm.DB {
 		dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Shanghai", config.DBConfig.Host, config.DBConfig.Username, config.DBConfig.Password, config.DBConfig.DBName, config.DBConfig.Port)
 		db, err = gorm.Open(postgres.Open(dsn), &gormConfig)
 	case "sqlite":
-		dsn := functions.GetExecutableDir() + "/.env/.db"
+		dsn := functions.GetExecutableDir() + "/conf" + "/.db"
 		db, err = gorm.Open(sqlite.Open(dsn), &gormConfig)
 	default:
 		panic("dbname_err")

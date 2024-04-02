@@ -2,13 +2,14 @@ package models
 
 import (
 	"fmt"
-	"github.com/google/uuid"
-	"gopay/internal/exts/db"
-	"gopay/internal/utils/functions"
-	"gorm.io/gorm"
 	"reflect"
 	"slices"
 	"strings"
+
+	"github.com/google/uuid"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"gorm.io/gorm"
 )
 
 type Operation func(*gorm.DB, string, interface{}) *gorm.DB

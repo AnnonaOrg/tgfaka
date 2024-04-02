@@ -1,8 +1,9 @@
 package config
 
 import (
-	"gopay/internal/utils/functions"
 	"time"
+
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 )
 
 func LoadAllConfig() {
@@ -17,12 +18,13 @@ func LoadAllConfig() {
 	Loc, _ = time.LoadLocation("Asia/Shanghai")
 }
 
-var configBaseDir = functions.GetExecutableDir() + "/.env"
+var appBaseDir = functions.GetExecutableDir()
+var configBaseDir = appBaseDir + "/conf"
 
 var SiteConfigPath = configBaseDir + "/config.ini"
-var LoginUrlSessionPath = configBaseDir + "/.urlsession"
-var LoginTokenSessionPath = configBaseDir + "/.tokensession"
-var ExchangeRateDataPath = configBaseDir + "/.exchangerate"
+var LoginUrlSessionPath = appBaseDir + "/.urlsession"
+var LoginTokenSessionPath = appBaseDir + "/.tokensession"
+var ExchangeRateDataPath = appBaseDir + "/.exchangerate"
 
 type Headers map[string]string
 

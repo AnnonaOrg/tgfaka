@@ -2,7 +2,7 @@ package crypto_api
 
 import (
 	"github.com/shopspring/decimal"
-	"gopay/internal/models"
+	"github.com/umfaka/tgfaka/internal/models"
 )
 
 type Provider interface {

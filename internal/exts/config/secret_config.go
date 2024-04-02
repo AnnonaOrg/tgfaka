@@ -1,8 +1,9 @@
 package config
 
 import (
-	"gopay/internal/utils/functions"
 	"os"
+
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 )
 
 var SiteSecret string

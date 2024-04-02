@@ -2,12 +2,13 @@ package admin_handler
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
-	"gopay/internal/exts/config"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/restful"
 	"regexp"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/restful"
 )
 
 func Setting(c *gin.Context) {

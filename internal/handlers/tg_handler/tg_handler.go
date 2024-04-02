@@ -2,17 +2,18 @@ package tg_handler
 
 import (
 	"fmt"
-	"gopay/internal/exts/config"
-	"gopay/internal/exts/db"
-	my_log "gopay/internal/exts/log"
-	"gopay/internal/exts/tg_bot"
-	"gopay/internal/models"
-	"gopay/internal/services"
-	"gopay/internal/utils/functions"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/exts/tg_bot"
+	"github.com/umfaka/tgfaka/internal/log"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/google/uuid"
@@ -65,7 +66,7 @@ func StartCommand(update tgbotapi.Update) {
 
 		if services.GetUserBalanceCount(update.Message.Chat.ID) > 0 {
 			if err := services.UpdateUserBalanceEx(userid, username, firstName, lastName); err != nil {
-				my_log.LogError(fmt.Sprintf("services.UpdateUserBalanceEx(%d,%s): %v", userid, username))
+				log.Errorf("services.UpdateUserBalanceEx(%d,%s): %v", userid, username)
 			}
 			return
 		}
@@ -83,11 +84,11 @@ func StartCommand(update tgbotapi.Update) {
 						if services.GetUserBalanceCountByInviterCode(startInviteCode) > 0 {
 							// 获取邀请者信息
 							if uTmp, err := services.GetUserBalanceByInviterCode(startInviteCode); err != nil {
-								my_log.LogError(fmt.Sprintf("services.GetUserBalanceByInviterCode(%s): %v", vi, err))
+								log.Errorf("services.GetUserBalanceByInviterCode(%s): %v", vi, err)
 							} else {
 								startInviter = uTmp.Userid
 								if err := services.UpdateUserBalance(uTmp.Userid, inviteRewardsBalanceNum); err != nil {
-									my_log.LogError(fmt.Sprintf("services.UpdateUserBalance(%d,%d): %v", uTmp.Userid, inviteRewardsBalanceNum, err))
+									log.Errorf("services.UpdateUserBalance(%d,%d): %v", uTmp.Userid, inviteRewardsBalanceNum, err)
 								} else {
 									msgText := config.InviteRewardsBalanceMsg(map[string]interface{}{
 										"InviteRewardsBalanceNum": inviteRewardsBalanceNum,
@@ -110,7 +111,7 @@ func StartCommand(update tgbotapi.Update) {
 			userid, username, firstName, lastName, 0,
 			fmt.Sprintf("%d", startInviter), fmt.Sprintf("%d", userid),
 		); err != nil {
-			my_log.LogError(fmt.Sprintf("CreateUserBalance(%d,%s): %v", userid, username, err))
+			log.Errorf("CreateUserBalance(%d,%s): %v", userid, username, err)
 		}
 	}()
 }
@@ -159,7 +160,7 @@ func SendToAllCommand(update tgbotapi.Update) {
 	go func() {
 		userList, err := services.GetUserBalanceAll()
 		if err != nil {
-			my_log.LogError(fmt.Sprintf("GetUserBalanceAll(): %v", err))
+			log.Errorf("GetUserBalanceAll(): %v", err)
 			return
 		}
 		retMsgID := 0
@@ -169,7 +170,7 @@ func SendToAllCommand(update tgbotapi.Update) {
 			),
 		)
 		if err != nil {
-			my_log.LogError(fmt.Sprintf("发送反馈结果失败: %v", err))
+			log.Errorf("发送反馈结果失败: %v", err)
 		} else {
 			retMsgID = retMsg.MessageID
 		}
@@ -194,7 +195,7 @@ func SendToAllCommand(update tgbotapi.Update) {
 			expireTime := time.Second * 60
 			retMsg := tgbotapi.NewEditMessageText(chatID, retMsgID, retText)
 			if finalMsg, err := tg_bot.Bot.Send(retMsg); err != nil {
-				my_log.LogError(fmt.Sprintf("发送反馈结果失败: %v", err))
+				log.Errorf("发送反馈结果失败: %v", err)
 				return
 			} else {
 				//定时删除
@@ -296,12 +297,12 @@ func ProductDetail(update tgbotapi.Update) {
 	// 	tg_bot.Bot.Request(callback)
 	// 	return
 	// }
-	my_log.LogDebug("callbackData: " + callbackData)
+	log.Debug("callbackData: " + callbackData)
 	value := strings.TrimPrefix(callbackData, ProductDetailPrefix)
 
 	parts := strings.Split(value, "_")
 	if len(parts) != 2 {
-		my_log.LogDebug("callbackData(" + value + ") len(parts): " + strconv.Itoa(len(parts)))
+		log.Debug("callbackData(" + value + ") len(parts): " + strconv.Itoa(len(parts)))
 		callback := tgbotapi.NewCallback(update.CallbackQuery.ID, "参数长度错误")
 		tg_bot.Bot.Request(callback)
 		return
@@ -368,13 +369,13 @@ func ProductBalanceDetail(update tgbotapi.Update) {
 	senderChatID := update.Message.Chat.ID
 	productIDString := config.GetSiteConfig().BalanceProductUUID
 	if len(productIDString) == 0 {
-		my_log.LogError(fmt.Sprintf("商品ID(%s)未设置", productIDString))
+		log.Errorf("商品ID(%s)未设置", productIDString)
 		return
 	}
 
 	productID, err := uuid.Parse(productIDString)
 	if err != nil {
-		my_log.LogError(fmt.Sprintf("商品ID(%s)错误", productIDString))
+		log.Errorf("商品ID(%s)错误", productIDString)
 		return
 	}
 	var buyNum int64
@@ -382,7 +383,7 @@ func ProductBalanceDetail(update tgbotapi.Update) {
 
 	product, err := services.GetProductByIDByCustomer(productID)
 	if err != nil {
-		my_log.LogError(fmt.Sprintf("商品(%s)不存在", productIDString))
+		log.Errorf("商品(%s)不存在", productIDString)
 		return
 	}
 	product.InStockCount = 888
@@ -396,7 +397,7 @@ func ProductBalanceDetail(update tgbotapi.Update) {
 	goBackRow := GoBackRow(ProductListPagePrefix + "1")
 	paymentRow := paymentSelectRow(product.ID, buyNum)
 	if len(paymentRow) == 0 {
-		my_log.LogError("没有设置支付方式")
+		log.Error("没有设置支付方式")
 		return
 	}
 	closeRow := deleteMsgRow()
@@ -597,10 +598,10 @@ func PayOrderByBalance(update tgbotapi.Update) {
 		product, senderChatID, senderUsername, buyNum,
 	)
 	if err != nil {
-		my_log.LogError(fmt.Sprintf(
+		log.Errorf(
 			"services.CreateOrderByBalance(%+v,%d,%s,%d): %v",
 			product.ID, senderChatID, senderUsername, buyNum, err,
-		))
+		)
 		callback := tgbotapi.NewCallback(update.CallbackQuery.ID, err.Error())
 		tg_bot.Bot.Request(callback)
 		return
@@ -850,25 +851,25 @@ func ProductItemDownload(update tgbotapi.Update) {
 	if len(productItems) > 0 {
 		productItemsStr := strings.Join(productItems, "\n")
 		productItemsStr = product.Name + "\n" + productItemsStr
-		my_log.LogDebug("productItemsStr: " + productItemsStr)
+		log.Debug("productItemsStr: " + productItemsStr)
 		fileBody := []byte(productItemsStr)
 		fileBytes := tgbotapi.FileBytes{Name: "all.txt", Bytes: fileBody}
 		newMsg := tgbotapi.NewDocument(senderChatID, fileBytes)
 		newMsg.Caption = msgText
 		newMsg.ParseMode = tgbotapi.ModeHTML
 		if result, err := tg_bot.Bot.Send(newMsg); err != nil {
-			my_log.LogError(fmt.Sprintf("Bot.Send(%+v):%v", newMsg, err))
+			log.Errorf("Bot.Send(%+v):%v", newMsg, err)
 		} else {
-			my_log.LogDebug(fmt.Sprintf("result: %+v", result))
+			log.Debugf("result: %+v", result)
 		}
 	} else {
 		msgText = msgText + "\n" + "未找到商品项目"
 		newMsg := tgbotapi.NewMessage(senderChatID, msgText)
 		newMsg.ParseMode = tgbotapi.ModeHTML
 		if result, err := tg_bot.Bot.Send(newMsg); err != nil {
-			my_log.LogError(fmt.Sprintf("Bot.Send(%+v):%v", newMsg, err))
+			log.Errorf("Bot.Send(%+v):%v", newMsg, err)
 		} else {
-			my_log.LogDebug(fmt.Sprintf("result: %+v", result))
+			log.Debugf("result: %+v", result)
 		}
 	}
 

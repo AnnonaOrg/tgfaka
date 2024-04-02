@@ -4,20 +4,21 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
-	"gopay/internal/exts/config"
-	"gopay/internal/exts/db"
-	my_log "gopay/internal/exts/log"
-	"gopay/internal/models"
-	"gopay/internal/services"
-	"gopay/internal/utils/crypto_api/tron"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/handle_defender"
-	"gopay/internal/utils/requests"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/log"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/crypto_api/tron"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/handle_defender"
+	"github.com/umfaka/tgfaka/internal/utils/requests"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
-	"time"
 )
 
 func startCheckTransaction(network string) {
@@ -34,10 +35,10 @@ func startCheckTransaction(network string) {
 		}
 	}()
 
-	my_log.LogInfo(fmt.Sprintf("开始获取%s交易", network))
+	log.Infof("开始获取%s交易", network)
 	startTimestamp := functions.GetCurrentSecondTimestampFloat()
 	defer func() {
-		my_log.LogInfo(fmt.Sprintf("结束获取%s交易, 用时:%.3fs", network, functions.GetCurrentSecondTimestampFloat()-startTimestamp))
+		log.Infof("结束获取%s交易, 用时:%.3fs", network, functions.GetCurrentSecondTimestampFloat()-startTimestamp)
 	}()
 
 	var onChainTransfers []models.Transfer
@@ -47,7 +48,7 @@ func startCheckTransaction(network string) {
 		onChainTransfers, err = client.GetScheduleTransfers()
 		if err != nil {
 			err = errors.New(fmt.Sprintf("获取最新区块失败, Error: %v", err))
-			my_log.LogWarn(err.Error())
+			log.Warn(err.Error())
 		}
 	//case "POLYGON":
 	default:
@@ -300,8 +301,8 @@ func startUpdateExchangeRate() {
 			handle_defender.HandleError(err, msgText)
 		}
 	}()
-	my_log.LogInfo("开始更新汇率")
-	defer my_log.LogInfo("结束更新汇率")
+	log.Info("开始更新汇率")
+	defer log.Infof("结束更新汇率")
 
 	exchangeRate := config.ExchangeRateData
 	baseCurrency := config.CNY
@@ -310,7 +311,7 @@ func startUpdateExchangeRate() {
 		respByte, err := requests.Get(url)
 		if err != nil {
 			err = errors.New(fmt.Sprintf("Request Err, Url:%s ,Error: %v", url, err))
-			my_log.LogWarn(err.Error())
+			log.Warn(err.Error())
 			return
 		}
 		var result struct {
@@ -329,18 +330,18 @@ func startUpdateExchangeRate() {
 		err = json.Unmarshal(respByte, &result)
 		if err != nil {
 			err = errors.New(fmt.Sprintf("json解析错误"))
-			my_log.LogWarn(err.Error())
+			log.Warn(err.Error())
 			return
 		}
 
 		if len(result.Data) == 0 {
 			err = errors.New(fmt.Sprintf("json格式错误"))
-			my_log.LogWarn(err.Error())
+			log.Warn(err.Error())
 			return
 		}
 
 		if !result.Data[0].Price.GreaterThan(decimal.NewFromInt(0)) {
-			my_log.LogWarn(fmt.Sprintf("汇率数值错误"))
+			log.Warn(fmt.Sprintf("汇率数值错误"))
 			return
 		}
 		exchangeRate.ExchangeRate[config.Currency(targetCurrency)] = result.Data[0].Price
@@ -354,7 +355,7 @@ func startUpdateExchangeRate() {
 	err = config.SetExchangeRate(exchangeRate)
 	if err != nil {
 		err = errors.New(fmt.Sprintf("设置汇率失败"))
-		my_log.LogWarn(err.Error())
+		log.Warn(err.Error())
 		return
 	}
 
@@ -372,25 +373,25 @@ func clearExpire() {
 			handle_defender.HandleError(err, msgText)
 		}
 	}()
-	my_log.LogInfo("开始清理过期")
-	defer my_log.LogInfo("结束清理过期")
+	log.Info("开始清理过期")
+	defer log.Info("结束清理过期")
 
 	err = services.ClearExpireOrder()
 	if err != nil {
 		err = errors.New(fmt.Sprintf("清理过期订单DB错误, Error: %v", err))
-		my_log.LogWarn(err.Error())
+		log.Warn(err.Error())
 	}
 
 	err = services.ClearExpireWallet()
 	if err != nil {
 		err = errors.New(fmt.Sprintf("清理过期钱包DB错误, Error: %v", err))
-		my_log.LogWarn(err.Error())
+		log.Warn(err.Error())
 	}
 
 	err = services.ClearExpireProductItem()
 	if err != nil {
 		err = errors.New(fmt.Sprintf("清理过期商品项目DB错误, Error: %v", err))
-		my_log.LogWarn(err.Error())
+		log.Warn(err.Error())
 	}
 
 }

@@ -3,17 +3,18 @@ package admin_handler
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/shopspring/decimal"
-	"gopay/internal/exts/config"
-	"gopay/internal/exts/db"
-	"gopay/internal/models"
-	"gopay/internal/services"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/restful"
-	"net/http"
-	"time"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/restful"
 )
 
 func TokenLogin(c *gin.Context) {

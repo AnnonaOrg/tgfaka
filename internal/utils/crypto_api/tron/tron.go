@@ -8,17 +8,18 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/btcsuite/btcd/btcutil/base58"
-	"gopay/internal/exts/cache"
-	"gopay/internal/exts/config"
-	my_log "gopay/internal/exts/log"
-	"gopay/internal/models"
-	"gopay/internal/utils/crypto_api"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/requests"
 	"math/big"
 	"strings"
 	"time"
+
+	"github.com/btcsuite/btcd/btcutil/base58"
+	"github.com/umfaka/tgfaka/internal/exts/cache"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/log"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/utils/crypto_api"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/requests"
 
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -362,7 +363,7 @@ func (client *Tron) getLatestBlockNum() (int64, error) {
 	}
 	respByte, err := requests.Post(url, data, client.RequestsHeader)
 	if err != nil {
-		my_log.LogError(fmt.Sprintf("Request Err, Url:%s ,Error: %v", url, err))
+		log.Errorf("Request Err, Url:%s ,Error: %v", url, err)
 		return 0, err
 	}
 
@@ -423,7 +424,7 @@ func (client *Tron) GetScheduleTransfers() ([]models.Transfer, error) {
 
 // 块的起终不返回最后一个块，即1-2只返回1
 func (client *Tron) getTransactionsByBlockRange(startBlockNum int64, endBlockNum int64) ([]models.Transfer, error) {
-	my_log.LogDebug(fmt.Sprintf("Tron block range: %d - %d", startBlockNum, endBlockNum))
+	log.Debugf("Tron block range: %d - %d", startBlockNum, endBlockNum)
 	var transactions []models.Transfer
 
 	if startBlockNum > endBlockNum {
@@ -435,7 +436,7 @@ func (client *Tron) getTransactionsByBlockRange(startBlockNum int64, endBlockNum
 	reqData := map[string]interface{}{"startNum": startBlockNum, "endNum": endBlockNum + 1}
 	respByte, err := requests.Post(url, reqData, client.RequestsHeader)
 	if err != nil {
-		my_log.LogError(fmt.Sprintf("Request Err, Url:%s ,Error: %v", url, err))
+		log.Errorf("Request Err, Url:%s ,Error: %v", url, err)
 		return transactions, err
 	}
 

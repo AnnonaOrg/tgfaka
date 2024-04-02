@@ -2,10 +2,11 @@ package services
 
 import (
 	"fmt"
-	"gopay/internal/exts/config"
-	"gopay/internal/utils/functions"
 	"os"
 	"time"
+
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 )
 
 func GetAdminLoginUrlSession() string {

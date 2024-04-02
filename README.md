@@ -57,8 +57,8 @@ cmd         # 程序入口
 ## TG回复模板在templates中修改
 
 # 有问题反馈
-在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
-* tg: [@DawenDev](https://t.me/DawenDev)
+在使用中有任何问题，欢迎反馈
+* TG开发频道: [@DawenDev](https://t.me/DawenDev)
 * 
 ## 灵感来自以下的项目
 

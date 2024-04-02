@@ -2,7 +2,8 @@ package models
 
 import (
 	"fmt"
-	"gopay/internal/utils"
+
+	"github.com/umfaka/tgfaka/internal/utils"
 
 	"github.com/google/uuid"
 	"github.com/shopspring/decimal"

@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"gopay/internal/exts/config"
-	"gopay/internal/services"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/restful"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/restful"
 )
 
 func AdminAuthMiddleware() gin.HandlerFunc {

@@ -3,11 +3,12 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"gopay/internal/utils/functions"
 	"reflect"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/umfaka/tgfaka/internal/utils/functions"
 
 	"gopkg.in/ini.v1"
 )
@@ -29,7 +30,7 @@ type SiteConfigStruct struct {
 	PaymentMethods              string `json:"payment_methods" desc:"启用的支付方式(多个用英文逗号分开) TRX-TRON 或 USDT-TRON "`
 	WalletType                  int    `json:"wallet_type" desc:"收款类型: 1.任意金额钱包 2.小数点尾数钱包"`
 	Proxy                       Proxy  `json:"proxy" desc:"网络代理，如果要用代理则取消注释并填写"`
-	LogLevel                    int    `json:"log_level" desc:"日志记录级别,0为Debug"`
+	LogLevel                    string `json:"log_level" desc:"日志记录级别 panic,fatal,error,warn,info,debug,trace"`
 	EnableDBDebug               bool   `json:"enable_db_debug" desc:"开启数据库Debug输出(重启生效)"`
 	EnableTGBotDebug            bool   `json:"enable_tg_bot_debug" desc:"开启Telegram Bot 输出(重启生效)"`
 	ContactSupport              string `json:"contact_support" desc:"联系客服url"`

@@ -2,12 +2,13 @@ package tg_bot
 
 import (
 	"fmt"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"golang.org/x/net/proxy"
-	"gopay/internal/exts/config"
-	my_log "gopay/internal/exts/log"
 	"net/http"
 	"net/url"
+
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/log"
+	"golang.org/x/net/proxy"
 )
 
 //type SilentLogger struct{}
@@ -40,14 +41,14 @@ func InitTGBot() {
 		client.Transport = tgTransport
 	}
 
-	my_log.LogInfo("正在连接TG bot")
+	log.Info("正在连接TG bot")
 	var err error
 	Bot, err = tgbotapi.NewBotAPIWithClient(config.GetSiteConfig().TgBotToken, "https://api.telegram.org/bot%s/%s", client)
 	if err != nil {
 		panic(err)
 	}
 	Bot.Debug = config.SiteConfig.EnableTGBotDebug
-	my_log.LogInfo("成功连接TG bot")
+	log.Info("成功连接TG bot")
 }
 
 func SendAdmin(msgText string) {

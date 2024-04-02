@@ -1,8 +1,8 @@
 package services
 
 import (
-	"gopay/internal/exts/db"
-	"gopay/internal/models"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/models"
 )
 
 func CreateBalanceHistory(balanceHistory *models.BalanceHistory) error {

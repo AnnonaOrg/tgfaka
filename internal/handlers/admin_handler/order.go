@@ -2,9 +2,9 @@ package admin_handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"gopay/internal/services"
-	"gopay/internal/utils/functions"
-	"gopay/internal/utils/restful"
+	"github.com/umfaka/tgfaka/internal/services"
+	"github.com/umfaka/tgfaka/internal/utils/functions"
+	"github.com/umfaka/tgfaka/internal/utils/restful"
 )
 
 func ReleaseOrders(c *gin.Context) {

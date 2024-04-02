@@ -2,16 +2,21 @@ package router
 
 import (
 	"fmt"
-	"gopay/internal/exts/cache"
-	"gopay/internal/exts/config"
-	"gopay/internal/exts/db"
-	"gopay/internal/exts/tg_bot"
-	"gopay/internal/handlers/admin_handler"
-	"gopay/internal/handlers/tg_handler"
-	"gopay/internal/models"
-	"gopay/internal/router/middleware"
-	"gopay/internal/utils/handle_defender"
+	"net/http"
 	"strings"
+
+	"github.com/umfaka/tgfaka/internal/log"
+
+	adminTPL "github.com/umfaka/tgfaka/internal/admin_templates"
+	"github.com/umfaka/tgfaka/internal/exts/cache"
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/exts/tg_bot"
+	"github.com/umfaka/tgfaka/internal/handlers/admin_handler"
+	"github.com/umfaka/tgfaka/internal/handlers/tg_handler"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/router/middleware"
+	"github.com/umfaka/tgfaka/internal/utils/handle_defender"
 
 	"github.com/gin-gonic/gin"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -23,6 +28,7 @@ func SetupRoutes() *gin.Engine {
 	db.InitAllDB()
 	tg_bot.InitTGBot()
 	cache.InitCache()
+	log.Init()
 
 	r := gin.Default()
 
@@ -59,6 +65,9 @@ func SetupRoutes() *gin.Engine {
 
 	r.POST("/api/admin/setting", middleware.AdminAuthMiddleware(), admin_handler.Setting)
 	r.POST("/api/admin/edit_setting", middleware.AdminAuthMiddleware(), admin_handler.EditSetting)
+
+	r.GET("/page/admin/", admin_handler.HomeHandle)
+	r.StaticFS("/res/", http.FS(adminTPL.StaticSdk))
 
 	return r
 }

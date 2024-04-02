@@ -2,9 +2,10 @@ package tg_handler
 
 import (
 	"fmt"
-	"gopay/internal/exts/config"
-	"gopay/internal/models"
-	"gopay/internal/services"
+
+	"github.com/umfaka/tgfaka/internal/exts/config"
+	"github.com/umfaka/tgfaka/internal/models"
+	"github.com/umfaka/tgfaka/internal/services"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/google/uuid"
@@ -46,7 +47,7 @@ func paginationToRows(pagination services.Pagination) [][]tgbotapi.InlineKeyboar
 func paymentSelectRow(productID uuid.UUID, buyNum int64) []tgbotapi.InlineKeyboardButton {
 	var paymentSelectRow []tgbotapi.InlineKeyboardButton
 
-	if !config.GetSiteConfig().EnableOnlyBalancePaymentMethods {
+	if !config.GetSiteConfig().EnableOnlyBalancePaymentMethods || config.IsBalanceProduct(productID.String()) {
 		for _, v := range config.GetAvailablePaymentMethods() {
 			callbackData := fmt.Sprintf("%s%s_%s_%d", PayOrderPrefix, productID, v, buyNum)
 			paymentSelectRow = append(paymentSelectRow, tgbotapi.NewInlineKeyboardButtonData(v, callbackData))

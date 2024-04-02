@@ -2,8 +2,9 @@ package services
 
 import (
 	"fmt"
-	"gopay/internal/exts/db"
-	"gopay/internal/models"
+
+	"github.com/umfaka/tgfaka/internal/exts/db"
+	"github.com/umfaka/tgfaka/internal/models"
 
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
