@@ -52,9 +52,9 @@ type SiteConfigStruct struct {
 	DiscountNumRules  string `json:"discount_num_rules" desc:"按件折扣规则，配置格式(金额:折扣比例),多条规则使用英文竖线分割,例如 满100件打7.1折: 100:7.1 "`
 
 	EnableFileProduct bool   `json:"enable_file_product" desc:"开启 文件商品 功能"`
-	FileProductDir    string `json:"file_product_dir" desc:"文件商品存放目录,默认存放位于 ./upload/"`
+	FileProductDir    string `json:"file_product_dir" desc:"文件商品存放目录,默认存放位于 ./upload/ ,文件卡密格式 file|文件名"`
 
-	EnableChatInviteProduct bool `json:"enable_chat_invite_product" desc:"开启 会话邀请 功能"`
+	EnableChatInviteProduct bool `json:"enable_chat_invite_product" desc:"开启 会话邀请 功能,邀请链接卡密格式 invite|群或频道id"`
 
 	EnableInviteRewards     bool  `json:"enable_invite_rewards" desc:"开启 邀请奖励余额 功能"`
 	InviteRewardsBalanceNum int64 `json:"invite_rewards_balance_num" desc:"邀请奖励金额,仅支持数字"`
