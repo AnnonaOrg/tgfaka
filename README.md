@@ -17,8 +17,7 @@
 
 
 # DEMO
-
-
+[betaBot](https://t.me/unclebetabot)
 
 # 项目结构
 ```angular2html
@@ -54,19 +53,19 @@ cmd         # 程序入口
     1 .env路径下的文件包含敏感信息，请不要暴漏给外部（不要把该文件夹放到nginx网站目录下）
     2 请对自己的信息负责，保护好自己的tg账号，不要使用第三方客户端；登录管理页面后及时退出；如数据库中有钱包密钥，谨慎使用导出钱包功能
 
+# Docker运行方式(推荐)
+参考 [umfaka/tgfaka_release](https://github.com/umfaka/tgfaka_release)
 
 # 使用方法
-- 主程序可以自己clone下来编译，也可以直接下载编译好的版本（linux需要给权限运行`chmod +x ./crypto_tg_faka_linux`），请运行在开启SSL的网络环境下（不加SSL会登录失败，因为cookie是设置在https上的）
-- 后台页面在[`build`](https://github.com/AnnonaOrg/tgfaka/releases/tag/release)压缩包的`wwwroot`文件夹里面，将`wwwroot`目录下的文件放到nginx网站根目录，并设置反向代理指向程序运行端口
-- 配置.env下的配置文件`config.ini`
-- 把的程序放到与`.env`、`templates`等同一目录下，直接运行程序
+- 配置`conf`下的配置文件`config.ini`
+- 把的程序放到与`conf`、`templates`等同一目录下，直接运行程序
 - 正常启动程序后，使用管理员账号回复机器人`/login`即可生成一次性登录地址（配置文件填写域名后该登录链接便会附带域名）
 
-# 程序运行参数
-    --port 端口号 默认8082
+## 程序运行参数
+    --port 端口号 默认 8082
 
-# Nginx反向代理配置(端口写自己的)
-    location ~ ^/(api) {
+## Nginx反向代理配置(端口写自己的)
+    location / {
         proxy_pass http://127.0.0.1:8082;
     }
     
@@ -75,7 +74,14 @@ cmd         # 程序入口
 # 有问题反馈
 在使用中有任何问题，欢迎反馈
 * TG开发频道: [@DawenDev](https://t.me/DawenDev)
-* 
+
+## 打赏
+如果该项目对您有所帮助，希望可以请我喝一杯咖啡☕️
+Usdt(trc20)打赏地址: 
+```
+TQ17mbGbkjx3sdfsBR1SqmpUsRTyD8XHW3
+```
+
 ## 灵感来自以下的项目
 
 * [epusdt](https://github.com/assimon/epusdt)
