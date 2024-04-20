@@ -115,12 +115,6 @@ func handleUpdate(update tgbotapi.Update) {
 	}
 
 	if update.Message != nil {
-		// if config.GetSiteConfig().EnableWhitelistBuy && update.Message.Chat.IsPrivate() {
-		// 	if !config.IsWhitelist(update.Message.Chat.ID) {
-		// 		tg_handler.Warning(update)
-		// 		return
-		// 	}
-		// }
 		if update.Message.IsCommand() {
 			switch update.Message.Command() {
 			case "start":
@@ -135,6 +129,8 @@ func handleUpdate(update tgbotapi.Update) {
 				tg_handler.SendToAllCommand(update)
 			case "topup":
 				tg_handler.TopUpCommand(update)
+			case "version":
+				tg_handler.Version(update)
 			}
 
 			return
