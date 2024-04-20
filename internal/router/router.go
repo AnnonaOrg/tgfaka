@@ -92,13 +92,35 @@ func handleUpdate(update tgbotapi.Update) {
 		}
 	}()
 
-	if update.Message != nil {
-		if config.GetSiteConfig().EnableWhitelistBuy && update.Message.Chat.IsPrivate() {
-			if !config.IsWhitelist(update.Message.Chat.ID) {
+	if config.GetSiteConfig().EnableWhitelistBuy && update.SentFrom() != nil {
+		if sender := update.SentFrom(); sender != nil {
+			senderUsername := ""
+			if len(sender.UserName) > 0 {
+				senderUsername = "@" + sender.UserName
+			}
+			senderID := sender.ID
+			if !config.IsWhitelist(senderID) {
+				log.Debugf("白名单模式:非白名单成员: %d %s", senderID, senderUsername)
 				tg_handler.Warning(update)
 				return
+			} else {
+				log.Debugf("白名单模式:白名单成员: %d %s", senderID, senderUsername)
 			}
+		} else {
+			log.Debugf("未识别类型消息: %+v", update)
+			return
 		}
+	} else {
+		log.Debugf("非白名单模式")
+	}
+
+	if update.Message != nil {
+		// if config.GetSiteConfig().EnableWhitelistBuy && update.Message.Chat.IsPrivate() {
+		// 	if !config.IsWhitelist(update.Message.Chat.ID) {
+		// 		tg_handler.Warning(update)
+		// 		return
+		// 	}
+		// }
 		if update.Message.IsCommand() {
 			switch update.Message.Command() {
 			case "start":

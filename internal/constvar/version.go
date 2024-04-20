@@ -2,5 +2,5 @@ package constvar
 
 const (
 	APP_NAME    = "tgfaka"
-	APP_VERSION = "3.3.3"
+	APP_VERSION = "3.3.4"
 )

@@ -7,6 +7,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/umfaka/tgfaka/internal/constvar"
+
 	"github.com/umfaka/tgfaka/internal/exts/config"
 	"github.com/umfaka/tgfaka/internal/exts/db"
 	"github.com/umfaka/tgfaka/internal/exts/tg_bot"
@@ -894,4 +896,14 @@ func Warning(update tgbotapi.Update) {
 	msg.DisableWebPagePreview = true
 
 	tg_bot.Bot.Send(msg)
+}
+
+// 白名单购买 警告消息
+func Version(update tgbotapi.Update) {
+	if update.SentFrom() != nil {
+		senderID := update.SentFrom().ID
+		msgText := constvar.APPVersion()
+		msg := tgbotapi.NewMessage(senderID, msgText)
+		tg_bot.Bot.Send(msg)
+	}
 }
