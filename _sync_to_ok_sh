@@ -1,8 +1,10 @@
 #!/bin/bash
 
-cp -rf ./cmd/* ../tgfaka_zip_ok/cmd/
-#cp -rf ./build/* ../tgfaka_zip_ok/build/
-cp -rf ./internal/* ../tgfaka_zip_ok/internal/
-cp -rf ./templates/* ../tgfaka_zip_ok/templates/
-#cp -rf ./Dockerfile ../tgfaka_zip_ok/
-cp -rf ./README.md ../tgfaka_zip_ok/
+#cp -rf ./cmd ../tgfaka_ok/
+#cp -rf ./conf ../tgfaka_ok/
+#cp -rf ./internal ../tgfaka_ok/
+#cp -rf ./static ../tgfaka_ok/
+cp -rf ./templates ../tgfaka_ok/
+#cp -rf ./README.md ../tgfaka_ok/
+#cp -rf ./Dockerfile ../tgfaka_ok/
+cp -rf ./docker-compose.yml ../tgfaka_ok/

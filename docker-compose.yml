@@ -8,9 +8,8 @@ services:
     # command: /app/main --port 8082
     volumes:
       - ./conf:/app/conf
-      #- ./conf/config.ini:/app/conf/config.ini
       - ./upload:/app/upload
-      #- ./templates:/app/templates
+      - ./templates:/app/templates
     environment:
       TZ: Asia/Shanghai
     ports:
