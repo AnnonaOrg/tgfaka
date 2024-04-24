@@ -8,3 +8,4 @@ cp -rf ./templates ../tgfaka_ok/
 #cp -rf ./README.md ../tgfaka_ok/
 #cp -rf ./Dockerfile ../tgfaka_ok/
 cp -rf ./docker-compose.yml ../tgfaka_ok/
+cp -rf ./_zip_ok_sh ../tgfaka_ok/

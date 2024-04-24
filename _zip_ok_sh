@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm ../tgfaka_ok.zip
+zip -r "../tgfaka_ok.zip" "."
