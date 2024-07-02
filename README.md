@@ -71,9 +71,9 @@ cmd         # 程序入口
     
 ## TG回复模板在templates中修改
 
-# 有问题反馈
+## 有问题反馈
 在使用中有任何问题，欢迎反馈
-* TG开发频道: [@DawenDev](https://t.me/DawenDev)
+开发机器人频道: [@umfaka](https://t.me/umfaka)
 
 ## 打赏
 如果该项目对您有所帮助，希望可以请我喝一杯咖啡☕️
@@ -81,6 +81,7 @@ Usdt(trc20)打赏地址:
 ```
 TYQfioyM9iTnHorDRa6vJXLcA6aeZo6887
 ```
+
 
 ## 灵感来自以下的项目
 
