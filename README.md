@@ -79,8 +79,9 @@ cmd         # 程序入口
 如果该项目对您有所帮助，希望可以请我喝一杯咖啡☕️
 Usdt(trc20)打赏地址: 
 ```
-TYQfioyM9iTnHorDRa6vJXLcA6aeZo6887
+TQKsqiZJcgcbNfAtpjtPz9usJiEcRzTswT
 ```
+
 
 
 ## 灵感来自以下的项目
