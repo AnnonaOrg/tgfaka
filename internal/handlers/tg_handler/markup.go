@@ -22,6 +22,11 @@ func paginationToRows(pagination services.Pagination) [][]tgbotapi.InlineKeyboar
 			buttonText = product.Name
 		} else {
 			buttonText = fmt.Sprintf("%s 库存:%d", product.Name, product.InStockCount)
+			if config.GetSiteConfig().EnableHiddenInStockCount {
+				buttonText = fmt.Sprintf("%s", product.Name)
+			} else {
+				buttonText = fmt.Sprintf("%s 库存:%d", product.Name, product.InStockCount)
+			}
 		}
 
 		row := []tgbotapi.InlineKeyboardButton{tgbotapi.NewInlineKeyboardButtonData(buttonText, ProductDetailPrefix+product.ID.String()+"_1")}

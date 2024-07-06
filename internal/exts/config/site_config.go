@@ -61,6 +61,8 @@ type SiteConfigStruct struct {
 
 	EnableWhitelistBuy bool   `json:"enable_whitelist_buy" desc:"开启 白名单购买 功能"`
 	WhitelistTGID      string `json:"whitelist_tg_id" desc:"白名单人员 Telegram Chat ID,多个ID使用 | 分开 "`
+
+	EnableHiddenInStockCount bool `json:"enable_hidden_stock_count" desc:"开启 隐藏商品列表商品库存 功能"`
 }
 
 func IsAdmin(chatID int64) bool {
