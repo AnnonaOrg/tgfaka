@@ -443,6 +443,13 @@ func PayOrder(update tgbotapi.Update) {
 	if err != nil || buyNum <= 0 {
 		buyNum = 1
 	}
+	if buyMinNum := config.GetSiteConfig().BuyMinNum; buyMinNum > 0 {
+		if buyNum < buyMinNum {
+			callback := tgbotapi.NewCallback(update.CallbackQuery.ID, fmt.Sprintf("起购数量:%d", buyMinNum))
+			tg_bot.Bot.Request(callback)
+			return
+		}
+	}
 
 	if !config.IsPaymentEnable(paymentOptionString) {
 		callback := tgbotapi.NewCallback(update.CallbackQuery.ID, "支付方式不存在")
