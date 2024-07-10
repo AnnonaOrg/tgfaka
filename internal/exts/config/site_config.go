@@ -63,6 +63,8 @@ type SiteConfigStruct struct {
 	WhitelistTGID      string `json:"whitelist_tg_id" desc:"白名单人员 Telegram Chat ID,多个ID使用 | 分开 "`
 
 	EnableHiddenInStockCount bool `json:"enable_hidden_stock_count" desc:"开启 隐藏商品列表商品库存 功能"`
+
+	BuyMinNum int64 `json:"buy_mini_num" desc:"限制单次最小购买数量,0为不限制: 例如 20"`
 }
 
 func IsAdmin(chatID int64) bool {
