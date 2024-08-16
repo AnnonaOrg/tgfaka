@@ -569,7 +569,7 @@ func SendOrderCallBack(chatID int64, toDeleteMsgID int, order models.Order, prod
 			return
 		}
 	}
-	if len(productItemList) > 10 {
+	if len(productItemList) > 2 {
 		SendOrderCallBackMore(chatID, toDeleteMsgID, order, product, productItemList)
 		return
 	}
