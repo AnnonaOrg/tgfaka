@@ -11,16 +11,6 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-//type SilentLogger struct{}
-//
-//func (l SilentLogger) Println(v ...interface{})               {}
-//func (l SilentLogger) Printf(format string, v ...interface{}) {}
-//
-//type BotLogger interface {
-//	Println(v ...interface{})
-//	Printf(format string, v ...interface{})
-//}
-
 var Bot *tgbotapi.BotAPI
 
 func InitTGBot() {
@@ -48,7 +38,12 @@ func InitTGBot() {
 		panic(err)
 	}
 	Bot.Debug = config.SiteConfig.EnableTGBotDebug
-	log.Info("成功连接TG bot")
+
+	botUser, err := Bot.GetMe()
+	if err != nil {
+		panic(err)
+	}
+	log.Infof("成功连接TG bot(@%s %d)", botUser.UserName, botUser.ID)
 }
 
 func SendAdmin(msgText string) {

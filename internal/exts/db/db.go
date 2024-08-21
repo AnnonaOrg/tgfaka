@@ -16,11 +16,6 @@ import (
 
 var DB *gorm.DB
 
-//var RDB *redis.Client
-
-//var DB = InitDB()
-//var RDB = InitRedisDB()
-
 func InitDB() *gorm.DB {
 	var gormConfig = gorm.Config{}
 
@@ -55,21 +50,6 @@ func InitDB() *gorm.DB {
 	return db
 }
 
-//func InitRedisDB() *redis.Client {
-//	client := redis.NewClient(&redis.Options{
-//		Addr:     "localhost:6379",
-//		Password: "",
-//		DB:       0,
-//	})
-//
-//	_, err := client.Ping(context.Background()).Result()
-//	if err != nil {
-//		panic(err)
-//	}
-//	return client
-//}
-
 func InitAllDB() {
 	DB = InitDB()
-	//RDB = InitRedisDB()
 }

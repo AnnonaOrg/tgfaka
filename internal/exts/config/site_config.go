@@ -16,7 +16,7 @@ import (
 type SiteConfigStruct struct {
 	//EnableReg           bool   `desc:"是否开启注册"`
 	TgBotToken            string        `json:"tg_bot_token" desc:"Telegram Bot Token, 在@BotFather申请(重启生效)"`
-	AdminTGID             int64         `json:"admin_tg_id" desc:"管理员Telegram Chat ID,可以在@VannorBot获取,管理员可直接登录后台,请勿乱填(重启生效)"`
+	AdminTGID             int64         `json:"admin_tg_id" desc:"管理员Telegram Chat ID,可以在 @DawenDevBot 获取,管理员可直接登录后台,请勿乱填(重启生效)"`
 	Host                  string        `json:"host" desc:"域名，用于生成登录链接和重定向等操作"`
 	OrderExpireDuration   time.Duration `json:"order_expire_duration" desc:"订单过期时间,用户支付和链上交易需要时间,不要设置太短"`
 	TronGridApiKey        string        `json:"tron_grid_api_key" desc:"TronGrid API密钥,用于监听交易,在此获取:https://www.trongrid.io/dashboard/keys"`

@@ -8,6 +8,6 @@ func APPVersion() string {
 }
 
 func APPAbout() string {
-	text := APPName() + " " + APPVersion()
+	text := APPName() + " " + APPVersion() + "\nPowered by @umfaka"
 	return text
 }

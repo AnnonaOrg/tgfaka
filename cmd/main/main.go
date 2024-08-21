@@ -4,12 +4,11 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/gin-gonic/gin"
 	"github.com/umfaka/tgfaka/internal/exts/db"
 	"github.com/umfaka/tgfaka/internal/models"
 	"github.com/umfaka/tgfaka/internal/router"
 	"github.com/umfaka/tgfaka/internal/utils/schedule"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
