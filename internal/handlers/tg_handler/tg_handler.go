@@ -916,7 +916,7 @@ func Warning(update tgbotapi.Update) {
 func Version(update tgbotapi.Update) {
 	if update.SentFrom() != nil {
 		senderID := update.SentFrom().ID
-		msgText := constvar.APPVersion()
+		msgText := constvar.APPAbout()
 		msg := tgbotapi.NewMessage(senderID, msgText)
 		tg_bot.Bot.Send(msg)
 	}
