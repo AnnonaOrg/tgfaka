@@ -119,6 +119,7 @@ func handleUpdate(update tgbotapi.Update) {
 			switch update.Message.Command() {
 			case "start":
 				tg_handler.StartCommand(update)
+				tg_handler.ProductList(update)
 			case "login":
 				tg_handler.LoginCommand(update)
 			case "product_list":
