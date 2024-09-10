@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  tgfaka:
+    image:  annona/annona_tgfaka:latest
+    container_name: tgfaka
+    restart: always
+    volumes:
+      - ./conf/config.ini:/app/conf/config.ini
+      - ./upload:/app/upload
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "8082:8082"

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+# debian 基础环境
+# apt update &&  apt -y upgrade &&  apt install -y docker docker.io docker-compose &&   systemctl enable docker &&  systemctl start docker 
+sudo apt update && sudo apt -y upgrade && sudo apt install -y docker docker.io docker-compose &&  sudo systemctl enable docker && sudo systemctl start docker 
+
+# 配置文件
+# cp -rf conf/config.simple.ini conf/config.ini
+sudo cp -rf conf/config.simple.ini conf/config.ini
+
+
+# NGINX+TLS
+# apt update && apt -y install nginx certbot python3-certbot-nginx
+sudo apt update && sudo apt -y install certbot python3-certbot-nginx
+
+certbot --nginx
