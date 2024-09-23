@@ -82,8 +82,3 @@ Usdt(trc20)打赏地址:
 TQKsqiZJcgcbNfAtpjtPz9usJiEcRzTswT
 ```
 
-
-
-## 灵感来自以下的项目
-
-* [epusdt](https://github.com/assimon/epusdt)
